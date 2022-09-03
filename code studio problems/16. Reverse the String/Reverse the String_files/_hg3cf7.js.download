@@ -1,0 +1,31 @@
+try { 
+	webengage.onReady(function() {
+    var aqsd = webengage.state.getForever().aqsd;
+    var sessionCount = webengage.state.getForever().sc;
+    var second = null, three=null, latest=null;
+    if (aqsd) {
+        console.log("aquisition data", JSON.stringify(aqsd));
+        if(sessionCount == 1 ) {
+        	// captured by system no need to track 
+        }
+        if(sessionCount == 2 ){
+        	second = Object.assign({},aqsd); 
+        	webengage.track("second_aquisition", second);
+        }
+        if(sessionCount == 3 ){
+        	three = Object.assign({},aqsd); 
+        	webengage.track("third_aquisition", three);
+        }
+		if(sessionCount >= 4 ){
+        	latest = Object.assign({},aqsd); 
+        	webengage.track("latest_aquisition", latest);
+        }       
+    }
+});
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '~hg3cf7');
+	 }
+ }

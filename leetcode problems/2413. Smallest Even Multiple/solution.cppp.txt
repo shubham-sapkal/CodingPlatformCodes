@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int smallestEvenMultiple(int n) {
+        
+        int maxi= max(n, 2);
+
+        while(true)
+        {
+            if(maxi%n == 0 && maxi%2 == 0)
+            {
+                return maxi;
+            }
+            maxi++;
+        }
+
+        return -1;
+
+    }
+};

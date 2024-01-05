@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int ans = 1;
+
+        for(int i=0; i<points.size(); i++)
+        {
+            // map of <slop, point> for each point we want new map to declear
+            unordered_map<double, int> map;
+
+            for(int j=i+1; j<points.size(); j++)
+            {
+                // if x coordinates are same then slope will be infinte as bottom will be 0
+                if(points[i][0] == points[j][0] )
+                {
+                    map[INT_MAX]++;
+                }
+                else{
+                    double slope = (double)(points[j][1] - points[i][1] ) / (double)(points[i][0] - points[j][0] );
+                    map[slope]++;
+                }
+            }
+
+            // now we have slopes for each points store in mao
+            // count the maximum points
+            int temp = 0;
+            for(auto x : map)
+            {
+                temp = max(temp, x.second);
+            }
+
+            // temp store max points with same slope with respect to point i
+            // store the maximum value in ans
+            // total points in line will be temp+1 as 1 for the ith point also
+            ans = max(ans, temp+1);
+        }
+
+        return ans;
+    }
+};
